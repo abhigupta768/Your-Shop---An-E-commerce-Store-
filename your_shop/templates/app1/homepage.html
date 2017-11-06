@@ -1,0 +1,352 @@
+﻿<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	{% load static %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	{% load static %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	{% load static %}
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+  .signup:hover{
+    color: #fff;
+  }
+  .signup{
+    color: #d2d2d2;
+      text-decoration: none;
+      margin-top: 8px;
+      background-color: #222;
+      border:0;
+  }
+  .nav-tabs {
+    margin-bottom: 15px;
+}
+.sign-with {
+    margin-top: 25px;
+    padding: 20px;
+}
+div#OR {
+    height: 30px;
+    width: 30px;
+    border: 1px solid #C2C2C2;
+    border-radius: 50%;
+    font-weight: bold;
+    line-height: 28px;
+    text-align: center;
+    font-size: 12px;
+    float: right;
+    position: absolute;
+    right: -16px;
+    top: 40%;
+    z-index: 1;
+    background: #DFDFDF;
+}
+div#particles-js {
+  width: 100%;
+  height: 100%;
+  background-color: #222;
+  background-image: url('');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}
+      body{
+          background-color: #222;
+      }
+      .header1{
+          border-radius: 0;
+      }
+      .cat{
+          text-align: center;
+      }
+      .search{
+          height: 34px;
+      }
+      .container1{
+          width: 100%;
+          margin-bottom: 15px;
+      }
+      #myCarousel{
+          width: 100%;
+      }
+      .container{
+          position: relative;
+          top: 50px;padding: 0;
+          z-index:5;
+      }
+      .hello{
+          border:0px;
+          background-color: #f2f2f2
+      }
+      .proimage{
+          width: 100%;
+      }
+    {% block style %}
+    {% endblock %}
+  </style>
+
+</head>
+<body style="background-color: #222">
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '288048171682630',
+      cookie     : true,
+      xfbml      : true,
+      version    : '{latest-api-version}'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+ <nav class="navbar navbar-inverse" style="border-radius: 0;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{% url 'app1:index' %}">YOUR SHOP</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class=""><a href="{% url 'app1:index' %}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+        <li class="dropdown">
+          <a class="dropdown-hover" data-toggle="dropdown" href="#">Shop By Category<span class="caret"></span></a>
+          <ul class="dropdown-menu" style="text-align: center;">
+            {% block content1 %}
+            {% endblock %}
+            <!-- <li style="padding: 10px;"><a href="#">Cat 1</a></li>
+            <li style="padding: 10px;"><a href="#">Cat 2</a></li>
+            <li style="padding: 10px;"><a href="#">Cat 3</a></li> -->
+          </ul>
+        </li>
+        {% if user.is_authenticated %}
+                <ul class="nav navbar-nav">
+                <li><a href="{% url 'app1:incart' %}"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Cart</a> </li>
+                    <li><a href="{% url 'logout' %}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span>Logout</a></li>
+                  </ul>
+                            
+
+       {% else %}
+        <li><button class="btn btn-primary signup" data-toggle="modal" data-target="#myModal" style="text-decoration: none;margin-top: 8px;background-color: #222;border:0;"><span class="glyphicon glyphicon-log-in"></span>Login</button></li>
+        
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+                 <canvas id="demo-canvas"></canvas>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Login</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8" style="border-right: 1px dotted #C2C2C2;padding-right: 30px;">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#Login" data-toggle="tab">Login</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="Login">
+
+                                <form method="post" class="form-horizontal" action="{% url 'app1:log' %}" >
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="username" class="col-sm-2 control-label">
+                                            Username</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="username" placeholder="UserName" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1" class="col-sm-2 control-label">
+                                            Password</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" name="password" placeholder="Password" />
+                                        </div>
+                                    </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary btn-sm">
+                                            Submit</button>
+                                        <a href="javascript:;">Forgot your password?</a>
+                                    </div>
+                                </div>
+                                </form>
+                            </div>
+                           <!--  <div class="tab-pane" id="Registration">
+                                <form role="form" class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">
+                                        Name</label>
+                                    <div class="col-sm-10">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <select class="form-control">
+                                                    <option>Mr.</option>
+                                                    <option>Ms.</option>
+                                                    <option>Mrs.</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <input type="text" class="form-control" placeholder="Name" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">
+                                        Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="email" placeholder="Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mobile" class="col-sm-2 control-label">
+                                        Mobile</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="mobile" placeholder="Mobile" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-2 control-label">
+                                        Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="password" placeholder="Password" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <button type="button" class="btn btn-primary btn-sm">
+                                            Start Shopping!</button>
+                                        <button type="button" class="btn btn-default btn-sm">
+                                            Cancel</button>-->
+                             
+                        </div>
+                        <div id="OR" class="hidden-xs">
+                            OR</div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row text-center sign-with">
+                            <div class="col-md-12">
+                                <h3>
+                                    Sign in with</h3>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="btn-group btn-group-justified">
+                                    <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-primary">Facebook</a> <a href="{% url 'social:begin' 'github' %}" class="btn btn-danger">
+                                        GitHub</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <canvas id="demo-canvas1"></canvas>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<li><button class="btn btn-primary signup" style="text-decoration: none;margin-top: 8px;background-color: #222;border:0;"><a href="{% url 'app1:register' %}" style="text-decoration: none;"><span class="glyphicon glyphicon-user"></span> Sign Up</a></button></li>
+
+
+
+    {% endif %}
+    <form class="navbar-form navbar-left" method="get" action="{% url 'app1:search' %}">
+      <div class="input-group">
+        <input type="search" name="q" class="form-control" placeholder="Search">
+        <div class="input-group-btn">
+          <button class="btn btn-default" type="submit" style="height: 34px;">
+            <i class="glyphicon glyphicon-search"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+          <div id="google_translate_element" style="float: right; padding: 10px;"></div>
+          <script type="text/javascript">
+          function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'bn,fr,hi,zh-CN', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+            }
+          </script>
+          <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+{% load static %}
+<script src="{% static 'myapp/JS/texture.js' %}"></script>
+      </ul>
+    </div>
+  </div>
+  <div class="container" style="width: 100%; margin-bottom: 15px;">
+  <div id="myCarousel" class="carousel slide" data-ride="carousel" style="width: 100%;">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner">
+
+      <div class="item active">
+          {% load static %}
+        <img src="{% static 'myapp/images/a.jpg' %}" alt="Los Angeles" style="width:100%;">
+        <div class="carousel-caption">
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="{% static 'myapp/images/c.jpg' %}" alt="Chicago" style="width:100%;">
+        <div class="carousel-caption">
+
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="{% static 'myapp/images/d.jpg' %}" alt="New York" style="width:100%;">
+        <div class="carousel-caption">
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+</nav>
+ {% block content %}
+ {% endblock %}
+<script src="{% static 'myapp/JS/particles.js' %}"></script>
+<script src="{% static 'myapp/JS/app.js' %}"></script>
+</body>
+</html>

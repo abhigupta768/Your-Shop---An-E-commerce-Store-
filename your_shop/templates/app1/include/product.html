@@ -1,0 +1,8 @@
+<div class="box">
+{% for k in x %}
+	<div class='product'>
+		<a href='{{ k.product_id }}/'><img src='{{ k.image.url }}' /></a>
+		<p><a href='{ % url 'myapp:detail' k.product_id % }' id='des'>{{ k.title }}</a><br /><span id='price'>{{ k.product_price }}</span></p>
+	</div>
+{% endfor %}
+</div>

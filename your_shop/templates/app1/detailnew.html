@@ -1,0 +1,176 @@
+{% extends 'app1/homepage.html' %}
+
+{% block style %}
+   .tiles {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .tile {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .photo {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    transition: transform .5s ease-out;
+  }
+  .desbtn:focus{
+    border-bottom: 3px solid red;
+    color: #f2f2f2;
+    background-color: #222;
+  }
+  .desbtn{
+    border: 0;
+    border-bottom: 3px solid black;
+    color: #222;
+    background-color: #f2f2f2;
+    border-radius: 0;
+  }
+  .desbtn:hover{
+    border-bottom: 3px solid red;
+    color: #f2f2f2;
+    background-color: #222;
+  }
+  #des{
+    padding: 15px;
+    padding-left:0;
+    display: none;
+  }
+  .combtn:focus{
+    border-bottom: 3px solid red;
+    color: #f2f2f2;
+    background-color: #222;
+  }
+  .combtn{
+    border: 0;
+    border-bottom: 3px solid black;
+    color: #222;
+    background-color: #f2f2f2;
+    border-radius: 0;
+  }
+  .combtn:hover{
+    border-bottom: 3px solid red;
+    color: #f2f2f2;
+    background-color: #222;
+  }
+  #com{
+    padding: 15px;
+    padding-left:0;
+    display: none;
+  }
+  ul{
+    padding: 0;
+  }
+  li{
+    padding-bottom: 10px;
+  }
+{% endblock %}
+{% block content %}
+<div class="container" style="width: 100%; padding: 0; position: relative; top:200px;">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-4"  style="height: 500px;padding: 3% 1%; background-color: #f2f2f2; border-radius: 5px;border-top-right-radius: 0;border-bottom-right-radius: 0;">
+    <div class="tiles">
+        {% load static %}
+      <div class="tile" data-scale="2.4" data-image='{{ x.pic.url }}'></div>
+    </div>
+  </div>
+  <div class="col-sm-4"  style="height: 500px;padding: 3% 1%; background-color: #f2f2f2; border-radius: 5px;border-top-left-radius: 0;border-bottom-left-radius: 0;">
+    <h2>{{ x.name }} - {{ x.cat }}</h2>
+    <h4 style="margin: 15px;margin-left: 0;">Price: Rs:{{ x.price }}</h4>
+      {% if x.in_cart is False %}
+          {% if user.is_authenticated %}
+          <a href="{% url 'app1:cart' x.product_id %}">
+    <button type="button" class="btn btn-default btn-block" style="color: #f2f2f2; background-color: #222; padding: 15px;font-size: 16px;width: 50%;">ADD TO CART</button></a>
+          {% else %}
+              <div class='addcart'>
+                        <button type="button" onclick="myFunction()" style="color: #f2f2f2; background-color: #222; padding: 15px;font-size: 16px;width: 50%;" class="btn btn-default btn-block">Add To Cart</button>
+                        <p id="demo"></p>
+                        <script>
+                        function myFunction() {
+                            document.getElementById("demo").innerHTML = "You Need to <a href='#'>Login</a> first";
+                        }
+                        </script>
+    {% endif %}
+      {% else %}
+          <p> Item added to Cart.</p>
+      {% endif %}
+    <h5 style="padding-top: 15px;">Rating: {{ x.rating }} <i class="glyphicon glyphicon-star" style="height: 16px;"></i></h5>
+    <ul style="list-style-type: none;">
+      <li>
+    <button type="button" class="btn btn-info desbtn" data-toggle="collapse" data-target="#des">About Product</button>
+    <div id="des" class="collapse in desbox">
+      This is a product.
+    </div>
+  </li>
+  <li>
+    <button type="button" class="btn btn-info combtn" data-toggle="collapse" data-target="#com">About Company</button>
+    <div id="com" class="collapse in combox">
+      This is your Shop.
+    </div>
+  </li>
+  </ul>
+  <h6 style="padding-top: 20px;">COLLECTIONS: </h5>
+  </div>
+  <div class="col-sm-2">
+  </div>
+</div>
+  <script>
+      $(".tile")
+      .on("mouseover", function() {
+        $(this)
+          .children(".photo")
+          .css({ transform: "scale(" + $(this).attr("data-scale") + ")" });
+      })
+      .on("mouseout", function() {
+        $(this).children(".photo").css({ transform: "scale(1)" });
+      })
+      .on("mousemove", function(e) {
+        $(this)
+          .children(".photo")
+          .css({
+            "transform-origin":
+              (e.pageX - $(this).offset().left) / $(this).width() * 100 +
+                "% " +
+                (e.pageY - $(this).offset().top) / $(this).height() * 100 +
+                "%"
+          });
+      })
+      .each(function() {
+        $(this)
+          .append('<div class="photo"></div>')
+          .children(".photo")
+          .css({ "background-image": "url(" + $(this).attr("data-image") + ")" });
+      });
+  </script>
+  <script>
+    $(document).ready(function(){
+        $(".desbtn").click(function(){
+            $("#des").fadeToggle();
+        });
+      });
+    $(document).ready(function(){
+        $(".combtn").click(function(){
+            $("#com").fadeToggle();
+        });
+      });
+  </script>
+{% endblock %}
+{% block content1 %}
+{% for c in cats %}
+<li style="padding: 10px;"><a href="{% url 'app1:catview' %}?cate={{ c.name }}">{{ c.name }}</a></li>
+{% endfor %}
+{% endblock %}
