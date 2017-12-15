@@ -1,0 +1,9 @@
+{% extends 'app1/homepage.html' %}
+{% block title %} Checkout {% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+       <div class="container" style="color: #f2f2f2; font-size: 25px;" align="center"><b> Thank you for shopping :)
+       </b></div>
+    {% endif %}
+{% endblock %}

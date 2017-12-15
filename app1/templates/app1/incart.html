@@ -1,0 +1,59 @@
+{% extends 'app1/homepage.html' %}
+{% block title %} Shopping Cart {% endblock %}
+{% block content %}
+{% if list %}
+            <div id="particles-js" >
+                <div class="container" style="width: 100%; padding: 0; position: relative; top:200px;">
+                    <ul style="list-style-type: none;">
+                        {% for k in list %}
+                        <li>
+                            <div class="row" style="padding-bottom: 25px;">
+                            <div class="col-sm-1"></div>
+                            <div class="row">
+                            <div class="col-sm-10" style="background-color: #f2f2f2; border-radius: 5px;">
+                            <div class="row">
+                            <div class="col-sm-2" style="text-align: center; margin-top: 15%">
+                            <div>{{ k.name }}</div>
+            	            </div>
+            	            <div class="col-sm-4">
+            	               <a href="{% url 'app1:detail' k.product_id %}">
+            	               <img src="{{ k.pic.url }}" class="img-responsive proimage" alt="Image" style="padding:20px;"></div>
+           		               </a>
+           		            <div class="col-sm-4">
+           		            <div style="text-align: center; margin-top: 42%">
+                            <a href="{% url 'app1:rcart' k.product_id %}">
+                                <button title="Remove from Cart" style="color: #f2f2f2; background-color: #222; padding: 15px;font-size: 16px;width: 50%;">Remove from Cart</button>
+                            </a>
+            	            </div>
+            	            </div>
+            	            <div class="col-sm-2">
+				            <div style="text-align: center; margin-top: 100%">Price: {{ k.price }}</div>
+				            </div>
+				            </div>
+				            </div>
+			                </div>
+				            <div class="col-sm-1"></div>
+				            </div>
+            	        </li>
+				        {% endfor %}
+                    </ul>
+    			    <p align="center" style="font-size: 25px; color: #f2f2f2; padding: 20px;"> Total price is {{ total }}</p>
+    <!--
+    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'app1/include.html' %}
+    </form> -->
+                <div align="center">
+                    <a href="{% url 'app1:details' %}"> <button class="button" type="button" style="color: #222; background-color: #f2f2f2; padding: 15px;font-size: 16px;width: 50%;">Proceed To Checkout</button> </a>
+{% else %}
+            <p style="padding: 40px; color: #f2f2f2;font-size: 20px;" align="center"><strong>There are no items in the cart. <a href="{% url 'app1:index' %}" style="text-decoration: none;">Go Back To Shopping</a> </strong></p>
+{% endif %}
+	           </div>
+            </div>
+            </div>
+{% endblock %}
+{% block content1 %}
+    {% for c in cats %}
+        <li style="padding: 10px;"><a href="{% url 'app1:catview' %}?cate={{ c.name }}">{{ c.name }}</a></li>
+    {% endfor %}
+{% endblock %}

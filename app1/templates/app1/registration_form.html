@@ -1,0 +1,31 @@
+{% extends 'app1/homepage.html' %}
+{% block title %}  User Registration {% endblock %}
+
+{% block content %}
+	<div id="particles-js" >
+		<div class="container" style="z-index: 5">
+			<div class="col-sm-2"></div>
+			{% if user.is_authenticated %}
+			<p> You are already logged in. </p>
+			{% else %}
+			<div class="col-sm-8" style="background-color: #f2f2f2; border-radius: 5px; padding-top: 20px;padding-left: 20%; ">
+				<form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
+    			{% csrf_token %}
+    			{% include 'app1/form-template.html' %}
+        		<div class="form-group">
+            		<div class="col-sm-offset-2 col-sm-10">
+                		<button type="submit" class="btn btn-success">Start Shopping!</button>
+            		</div>
+        		</div>
+				</form>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+	</div>
+			{% endif %}
+{% endblock %}
+{% block content1 %}
+	{% for c in cats %}
+		<li style="padding: 10px;"><a href="{% url 'app1:catview' %}?cate={{ c.name }}">{{ c.name }}</a></li>
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'app1/homepage.html' %}
+{% block title %}
+    Search results
+{% endblock %}
+{% block content %}
+    {% if result.exists %}
+        <p>Here are the matched items:</p>
+        <div id="particles-js" >
+            <div class="container">
+                {% for x in result %}
+                <div class="col-sm-4">
+                    <div class="panel panel-default hello">
+                        <div class="panel-heading hello">{{ x.name }}</div>
+                        <a href="{% url 'app1:detail' x.product_id %}"><div class="panel-body"><img src="{{ x.pic.url }}" class="img-responsive proimage" alt="Image"></div>
+                        </a>
+                        <div class="panel-footer hello">Price: {{ x.price }}  </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        </ul>
+    {% else %}
+        <p>Sorry, there are no results for the given query. <a href="{% url 'app1:index' %}">Return to the Home Page</a> </p>
+    {% endif %}
+{% endblock %}
+{% block content1 %}
+    {% for c in cats %}
+        <li style="padding: 10px;"><a href="{% url 'app1:catview' %}?cate={{ c.name }}">{{ c.name }}</a></li>
+    {% endfor %}
+{% endblock %}

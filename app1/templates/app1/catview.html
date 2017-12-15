@@ -1,0 +1,25 @@
+{% extends 'app1/homepage.html' %}
+{% block title %}
+    Category View
+{% endblock %}
+{% block content %}
+        <div id="particles-js" >
+            <div class="container">
+                {% for k in x %}
+                <div class="col-sm-4">
+                    <div class="panel panel-default hello">
+                        <div class="panel-heading hello">{{ k.name }} - {{ k.cat }}</div>
+                        <a href="{% url 'app1:detail' k.product_id %}"><div class="panel-body"><img src="{{ k.pic.url }}" class="img-responsive proimage" alt="Image"></div>
+                        </a>
+                        <div class="panel-footer hello">Price: {{ k.price }}  </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock %}
+{% block content1 %}
+    {% for c in cats %}
+        <li style="padding: 10px;"><a href="{% url 'app1:catview' %}?cate={{ c.name }}">{{ c.name }}</a></li>
+    {% endfor %}
+{% endblock %}

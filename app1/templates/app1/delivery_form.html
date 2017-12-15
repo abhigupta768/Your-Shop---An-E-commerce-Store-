@@ -1,0 +1,32 @@
+{% extends 'app1/homepage.html' %}
+{% block title %} Add New Item {% endblock %}
+
+{% block content %}
+
+	{% if user.is_authenticated %}
+	<div id="particles-js" >
+		<div class="container" style="z-index: 5">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-4" style="background-color: #f2f2f2; border-radius: 5px; padding-top: 20px;padding-left: 60px;">
+				<form class="form-horizontal delivery" method="POST" enctype="multipart/form-data">
+    			{% csrf_token %}
+    			{% include 'app1/form-template.html' %}
+        			<div class="form-group">
+            			<div class="col-sm-offset-2 col-sm-10" style="padding-left: 40px;">
+                			<button type="submit" class="btn btn-success">Submit</button>
+            			</div>
+        			</div>
+				</form>
+			</div>
+			<div class="col-sm-2"></div>
+		</div>
+	</div>
+	{% else %}
+    <strong>You are Not Logged In. Click <a href="{% url 'login' %}">here</a> to login.</strong>
+	{% endif %}
+{% endblock %}
+{% block content1 %}
+	{% for c in cats %}
+		<li style="padding: 10px;"><a href="{% url 'app1:catview' %}?cate={{ c.name }}">{{ c.name }}</a></li>
+	{% endfor %}
+{% endblock %}
